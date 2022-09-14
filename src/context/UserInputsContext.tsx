@@ -1,6 +1,6 @@
 import { createContext, useState, useContext } from 'react';
 
-export interface UserInputs {
+interface UserInputs {
   principal: string;
   setPrincipal: React.Dispatch<React.SetStateAction<string>>;
   numberOfInstallments: string;
@@ -22,7 +22,7 @@ const UserInputsContext = createContext<UserInputs | undefined>(undefined);
 function useUserInputsContext() {
   const context = useContext(UserInputsContext);
   if (context === undefined) {
-    throw new Error('context is undefined');
+    throw new Error('UserInputsContext is undefined');
   }
   return context;
 }
