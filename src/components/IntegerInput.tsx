@@ -1,4 +1,4 @@
-import { TextField, InputAdornment } from '@mui/material';
+import { TextField } from '@mui/material';
 import { forwardRef, useState, useImperativeHandle } from 'react';
 import { useDisabledComponentsContext } from '../context/DisabledComponentsContext';
 
@@ -13,7 +13,6 @@ interface IProps {
 
 const InterestInput = forwardRef(({ label, value, onChange, controlled, helperText = ' ', styleOverride = {} }: IProps, ref) => {
   const [error, setError] = useState<boolean>(false); //internal error state to be controlled by the parent
-  const [isFocused, setIsFocused] = useState(false);
   const isDisabled = useDisabledComponentsContext().isDisabled;
 
   useImperativeHandle(
@@ -25,8 +24,7 @@ const InterestInput = forwardRef(({ label, value, onChange, controlled, helperTe
   );
 
   function handleInput(e: React.ChangeEvent<HTMLInputElement>) {
-    const validInput: RegExp = /^\d+\.?\d*$|^\d*$/; //regex validation for a decimal number
-
+    const validInput: RegExp = /^\d*$/; //regex validation for a integer number
     if (e.target.value.match(validInput)) {
       onChange(e);
       return;
@@ -44,12 +42,9 @@ const InterestInput = forwardRef(({ label, value, onChange, controlled, helperTe
         size="small"
         onChange={handleInput}
         variant="outlined"
-        sx={{ width: '9rem', margin: '0.5rem 0', ...styleOverride }}
+        sx={{ width: '9rem', margin: '0.5rem 0', fontSize: '0.85rem', ...styleOverride }}
         label={label ? label : ''}
         helperText={helperText}
-        InputProps={{ endAdornment: value !== '' || isFocused ? <InputAdornment position="end">%</InputAdornment> : <></> }}
-        onFocus={(e) => setIsFocused(true)}
-        onBlur={(e) => setIsFocused(false)}
       ></TextField>
     </>
   );

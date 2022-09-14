@@ -7,10 +7,10 @@ interface UserInputs {
   setNumberOfInstallments: React.Dispatch<React.SetStateAction<string>>;
   interestRate: string;
   setInterestRate: React.Dispatch<React.SetStateAction<string>>;
-  paymentInterval: number;
-  setPaymentInterval: React.Dispatch<React.SetStateAction<number>>;
-  compoundingPeriod: number;
-  setCompoundingPeriod: React.Dispatch<React.SetStateAction<number>>;
+  paymentInterval: string;
+  setPaymentInterval: React.Dispatch<React.SetStateAction<string>>;
+  compoundingPeriod: string;
+  setCompoundingPeriod: React.Dispatch<React.SetStateAction<string>>;
   kkdfRate: string;
   setKkdfRate: React.Dispatch<React.SetStateAction<string>>;
   bsmvRate: string;
@@ -32,13 +32,13 @@ interface IProps {
 }
 
 const UserInputsContextProvider = ({ children }: IProps) => {
-  const [principal, setPrincipal] = useState<string>('100000');
-  const [numberOfInstallments, setNumberOfInstallments] = useState<string>('12');
-  const [interestRate, setInterestRate] = useState<string>('0.0228');
-  const [paymentInterval, setPaymentInterval] = useState<number>(30);
-  const [compoundingPeriod, setCompoundingPeriod] = useState<number>(30);
-  const [kkdfRate, setKkdfRate] = useState<string>('0.15');
-  const [bsmvRate, setBsmvRate] = useState<string>('0.10');
+  const [principal, setPrincipal] = useState<string>('');
+  const [numberOfInstallments, setNumberOfInstallments] = useState<string>('');
+  const [interestRate, setInterestRate] = useState<string>('');
+  const [paymentInterval, setPaymentInterval] = useState<string>('');
+  const [compoundingPeriod, setCompoundingPeriod] = useState<string>('');
+  const [kkdfRate, setKkdfRate] = useState<string>('');
+  const [bsmvRate, setBsmvRate] = useState<string>('');
 
   return (
     <UserInputsContext.Provider
