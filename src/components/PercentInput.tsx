@@ -24,6 +24,8 @@ const InterestInput = forwardRef(({ label, value, onChange, controlled, helperTe
     []
   );
 
+  const DEFAULT_COMPONENT_STYLE = { width: '9rem', marginLeft: '1rem' };
+
   function handleInput(e: React.ChangeEvent<HTMLInputElement>) {
     const validInput: RegExp = /^\d+\.?\d*$|^\d*$/; //regex validation for a decimal number
 
@@ -44,7 +46,7 @@ const InterestInput = forwardRef(({ label, value, onChange, controlled, helperTe
         size="small"
         onChange={handleInput}
         variant="outlined"
-        sx={{ width: '9rem', margin: '0.5rem 0', ...styleOverride }}
+        sx={{ ...DEFAULT_COMPONENT_STYLE, ...styleOverride }}
         label={label ? label : ''}
         helperText={helperText}
         InputProps={{ endAdornment: value !== '' || isFocused ? <InputAdornment position="end">%</InputAdornment> : <></> }}

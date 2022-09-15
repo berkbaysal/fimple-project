@@ -36,6 +36,8 @@ const InterestInput = forwardRef(
       }
     }
 
+    const DEFAULT_COMPONENT_STYLE = { marginLeft: '1rem' };
+
     return (
       <>
         <TextField
@@ -45,7 +47,7 @@ const InterestInput = forwardRef(
           size="small"
           onChange={handleInput}
           variant="outlined"
-          sx={{ width: '9rem', margin: '0.5rem 0', fontSize: '0.85rem', ...styleOverride }}
+          sx={{ ...DEFAULT_COMPONENT_STYLE, ...styleOverride }}
           label={label ? label : ''}
           helperText={helperText ? helperText : ''}
           InputProps={{ endAdornment: value !== '' || isFocused ? <InputAdornment position="end">{currencyOverwrite}</InputAdornment> : <></> }}

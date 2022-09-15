@@ -23,13 +23,15 @@ const DropDownInput = forwardRef(({ label, optionsArray, value, onChange, contro
     []
   );
 
+  const DEFAULT_COMPONENT_STYLE = { width: '9rem', marginLeft: '1rem' };
+
   function handleChange(e: SelectChangeEvent<string>) {
     setError(false);
     onChange(e);
   }
 
   return (
-    <FormControl sx={{ minWidth: '9rem', margin: '0.5rem 0', ...styleOverride }} size="small">
+    <FormControl sx={{ ...DEFAULT_COMPONENT_STYLE, ...styleOverride }} size="small">
       <InputLabel id="select-label">{label}</InputLabel>
       <Select
         error={error}

@@ -19,49 +19,51 @@ const InputForm = () => {
   const userInputs = useUserInputsContext();
   const disabledContext = useDisabledComponentsContext();
   return (
-    // <Switch value={disabledContext.isDisabled} onChange={(e) => disabledContext.setIsDisabled(e.target.checked)} />
     <div className={style.inputFormContainer}>
-      <div className={style.inputFieldsContainer}>
-        <div className={style.basicInterestSection}>
-          <div className={style.twoCellWhitespace}></div>
-          <MoneyInput value={userInputs.principal} onChange={(e) => userInputs.setPrincipal(e.target.value)} label="Ana Para" />
-          <PercentInput
-            value={userInputs.interestRate}
-            onChange={(e) => userInputs.setInterestRate(e.target.value)}
-            label="Kar oranı"
-            helperText="(Aylık)"
-          />
-          <IntegerInput
-            value={userInputs.numberOfInstallments}
-            onChange={(e) => userInputs.setNumberOfInstallments(e.target.value)}
-            label="Taksit Sayısı"
-          />
-          <DropDownInput
-            value={userInputs.paymentInterval}
-            optionsArray={PAYMENT_INTERVAL_ARRAY}
-            label="Taksit Aralığı"
-            onChange={(e) => userInputs.setPaymentInterval(e.target.value)}
-          />
-          <PercentInput value={userInputs.kkdfRate} onChange={(e) => userInputs.setKkdfRate(e.target.value)} label="KKDF Oranı" />
-          <PercentInput value={userInputs.bsmvRate} onChange={(e) => userInputs.setBsmvRate(e.target.value)} label="BSMV Oranı" />
-        </div>
-        <div className={style.compoundInterestSection}>
-          <AdvancedToggle label="Bileşik Faiz" />
-          <DropDownInput
-            value={userInputs.paymentInterval}
-            optionsArray={PAYMENT_INTERVAL_ARRAY}
-            label="Taksit Aralığı"
-            onChange={(e) => userInputs.setPaymentInterval(e.target.value)}
-            controlled
-          />
-          <DropDownInput
-            value={userInputs.paymentInterval}
-            optionsArray={PAYMENT_INTERVAL_ARRAY}
-            label="Taksit Aralığı"
-            onChange={(e) => userInputs.setPaymentInterval(e.target.value)}
-            controlled
-          />
-        </div>
+      <div className={style.inputRow}>
+        <MoneyInput
+          value={userInputs.principal}
+          onChange={(e) => userInputs.setPrincipal(e.target.value)}
+          label="Ana Para"
+          helperText="Türk lirası cinsinden borç verilen ana para"
+          styleOverride={{ width: '100%' }}
+        />
+      </div>
+      <div className={style.inputRow}>
+        <PercentInput value={userInputs.interestRate} onChange={(e) => userInputs.setInterestRate(e.target.value)} label="Kar oranı" />
+        <DropDownInput
+          value={userInputs.paymentInterval}
+          optionsArray={PAYMENT_INTERVAL_ARRAY}
+          label="Oran Cinsi"
+          onChange={(e) => userInputs.setPaymentInterval(e.target.value)}
+        />
+      </div>
+      <div className={style.inputRow}>
+        <IntegerInput
+          value={userInputs.numberOfInstallments}
+          onChange={(e) => userInputs.setNumberOfInstallments(e.target.value)}
+          label="Taksit Sayısı"
+        />
+        <DropDownInput
+          value={userInputs.paymentInterval}
+          optionsArray={PAYMENT_INTERVAL_ARRAY}
+          label="Ödeme Aralığı"
+          onChange={(e) => userInputs.setPaymentInterval(e.target.value)}
+        />
+      </div>
+      <div className={style.inputRow}>
+        <PercentInput value={userInputs.kkdfRate} onChange={(e) => userInputs.setKkdfRate(e.target.value)} label="KKDF Oranı" />
+        <PercentInput value={userInputs.bsmvRate} onChange={(e) => userInputs.setBsmvRate(e.target.value)} label="BSMV Oranı" />
+      </div>
+      <div className={style.inputRow}>
+        <AdvancedToggle label="Bileşik Faiz" />
+        <DropDownInput
+          value={userInputs.paymentInterval}
+          optionsArray={PAYMENT_INTERVAL_ARRAY}
+          label="Taksit Aralığı"
+          onChange={(e) => userInputs.setPaymentInterval(e.target.value)}
+          controlled
+        />
       </div>
     </div>
   );

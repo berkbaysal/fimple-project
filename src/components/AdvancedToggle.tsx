@@ -6,10 +6,12 @@ interface IProps {
   styleOverride?: React.CSSProperties; //override MUI inline/default styling
 }
 
+const DEFAULT_COMPONENT_STYLE = { marginLeft: '1rem' };
+
 const AdvancedToggle = ({ label, styleOverride }: IProps) => {
   const disabledContext = useDisabledComponentsContext();
   return (
-    <FormControl sx={{ m: 1, ...styleOverride }}>
+    <FormControl sx={{ ...DEFAULT_COMPONENT_STYLE, ...styleOverride }}>
       <FormControlLabel
         control={<Switch value={disabledContext.isDisabled} onChange={(e) => disabledContext.setIsDisabled(e.target.checked)} />}
         label={label}

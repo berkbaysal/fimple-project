@@ -23,6 +23,8 @@ const InterestInput = forwardRef(({ label, value, onChange, controlled, helperTe
     []
   );
 
+  const DEFAULT_COMPONENT_STYLE = { width: '9rem', marginLeft: '1rem' };
+
   function handleInput(e: React.ChangeEvent<HTMLInputElement>) {
     const validInput: RegExp = /^\d*$/; //regex validation for a integer number
     if (e.target.value.match(validInput)) {
@@ -42,7 +44,7 @@ const InterestInput = forwardRef(({ label, value, onChange, controlled, helperTe
         size="small"
         onChange={handleInput}
         variant="outlined"
-        sx={{ width: '9rem', margin: '0.5rem 0', fontSize: '0.85rem', ...styleOverride }}
+        sx={{ ...DEFAULT_COMPONENT_STYLE, ...styleOverride }}
         label={label ? label : ''}
         helperText={helperText}
       ></TextField>

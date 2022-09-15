@@ -1,20 +1,12 @@
-.inputFieldsContainer {
+.inputFormContainer {
   display: flex;
+  flex-direction: column;
+  border: 3px solid navy;
+  padding: 3rem;
+  border-radius: 2rem 0 0 2rem;
 }
-.basicInterestSection {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr 1fr;
-  gap: 0 2rem;
-  padding: 0 1rem 0 4rem;
-  border-right: 2px lightblue solid;
-}
-.compoundInterestSection {
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: 1fr 1fr 1fr 1fr;
-  padding: 0 4rem 0 1rem;
-}
-.twoCellWhitespace {
-  grid-column: 1 / 3;
+.inputRow {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
 }
