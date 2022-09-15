@@ -6,15 +6,18 @@ import { UserInputs } from '../context/UserInputsContext';
 function calculateEffectiveInterestRate(userInputs: UserInputs): string {
   const effectiveInterestRate = (
     parseFloat(calculateInterestRatePerPeriod(userInputs)) *
-    (1 + (parseFloat(userInputs.kkdfRate) + parseFloat(userInputs.bsmvRate)))
+    (1 + (parseFloat(userInputs.kkdfRate) / 100 + parseFloat(userInputs.bsmvRate) / 100))
   ).toFixed(5);
   console.log(effectiveInterestRate);
   return effectiveInterestRate;
 }
 
 function calculateInterestRatePerPeriod(userInputs: UserInputs): string {
-  const interestRate = parseFloat(userInputs.interestRate);
-  const compoundsPerPayment = parseInt(userInputs.paymentInterval) / (userInputs.isDisabled ? parseInt(userInputs.compoundingPeriod) : 1);
+  const timeScale = parseFloat(userInputs.paymentInterval) / parseFloat(userInputs.interestRatePeriod);
+  const interestRate = (parseFloat(userInputs.interestRate) / 100) * timeScale;
+  const compoundsPerPayment = userInputs.complexCompoundingEnabled
+    ? parseInt(userInputs.paymentInterval) / parseInt(userInputs.compoundingPeriod)
+    : 1;
   return (Math.pow(1 + interestRate / compoundsPerPayment, compoundsPerPayment) - 1).toFixed(5);
 }
 

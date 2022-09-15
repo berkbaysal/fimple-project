@@ -1,5 +1,5 @@
 import { TextField, InputAdornment } from '@mui/material';
-import { forwardRef, useState, useImperativeHandle } from 'react';
+import { forwardRef, useState, useImperativeHandle, useEffect } from 'react';
 
 interface IProps {
   label?: string; //optional label for input field
@@ -19,9 +19,9 @@ const InterestInput = forwardRef(
     useImperativeHandle(
       ref,
       () => {
-        return { setError }; //Expose error state setter to parent for simultaneous form validation
+        return { setError, value }; //Expose error state setter and value reference to parent for simultaneous form validation
       },
-      []
+      [value]
     );
 
     function handleInput(e: React.ChangeEvent<HTMLInputElement>) {
@@ -35,6 +35,12 @@ const InterestInput = forwardRef(
     }
 
     const DEFAULT_COMPONENT_STYLE = { marginLeft: '1rem' };
+
+    useEffect(() => {
+      if (value !== '') {
+        setError(false);
+      }
+    }, [value]);
 
     return (
       <>

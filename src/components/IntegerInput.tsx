@@ -1,5 +1,5 @@
 import { TextField } from '@mui/material';
-import { forwardRef, useState, useImperativeHandle } from 'react';
+import { forwardRef, useState, useImperativeHandle, useEffect } from 'react';
 
 interface IProps {
   label?: string; //optional label for input field
@@ -16,9 +16,9 @@ const InterestInput = forwardRef(({ label, value, onChange, disabled = false, he
   useImperativeHandle(
     ref,
     () => {
-      return { setError }; //Expose error state setter to parent for simultaneous form validation
+      return { setError, value }; //Expose error state setter and value reference to parent for simultaneous form validation
     },
-    []
+    [value]
   );
 
   const DEFAULT_COMPONENT_STYLE = { width: '9rem', marginLeft: '1rem' };
@@ -32,6 +32,12 @@ const InterestInput = forwardRef(({ label, value, onChange, disabled = false, he
       return;
     }
   }
+
+  useEffect(() => {
+    if (value !== '') {
+      setError(false);
+    }
+  }, [value]);
 
   return (
     <>

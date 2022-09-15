@@ -1,27 +1,25 @@
 import { TextField, InputAdornment } from '@mui/material';
-import { forwardRef, useState, useImperativeHandle } from 'react';
-import { useUserInputsContext } from '../context/UserInputsContext';
+import { forwardRef, useState, useImperativeHandle, useEffect } from 'react';
 
 interface IProps {
   label?: string; //optional label for input field
   helperText?: string; //sub text for input field
-  controlled?: boolean; //allow control of disabled state of the instance from global context
+  disabled?: boolean; //allow control of disabled state of the instance
   styleOverride?: React.CSSProperties; //override MUI inline/default styling
   value: string; //controling react state
   onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void; //callback function to handle change
 }
 
-const InterestInput = forwardRef(({ label, value, onChange, controlled, helperText = ' ', styleOverride = {} }: IProps, ref) => {
+const InterestInput = forwardRef(({ label, value, onChange, disabled = false, helperText = ' ', styleOverride = {} }: IProps, ref) => {
   const [error, setError] = useState<boolean>(false); //internal error state to be controlled by the parent
   const [isFocused, setIsFocused] = useState(false);
-  const isDisabled = useUserInputsContext().isDisabled;
 
   useImperativeHandle(
     ref,
     () => {
-      return { setError }; //Expose error state setter to parent for simultaneous form validation
+      return { setError, value }; //Expose error state setter and value reference to parent for simultaneous form validation
     },
-    []
+    [value]
   );
 
   const DEFAULT_COMPONENT_STYLE = { width: '9rem', marginLeft: '1rem' };
@@ -37,10 +35,16 @@ const InterestInput = forwardRef(({ label, value, onChange, controlled, helperTe
     }
   }
 
+  useEffect(() => {
+    if (value !== '') {
+      setError(false);
+    }
+  }, [value]);
+
   return (
     <>
       <TextField
-        disabled={controlled && isDisabled}
+        disabled={disabled}
         error={error}
         value={value}
         size="small"

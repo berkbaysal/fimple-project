@@ -1,6 +1,5 @@
 import { Select, MenuItem, SelectChangeEvent, OutlinedInput, InputLabel, FormControl } from '@mui/material';
-import { forwardRef, useImperativeHandle, useState } from 'react';
-import { useUserInputsContext } from '../context/UserInputsContext';
+import { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
 
 interface IProps {
   label?: string; //optional label for initial display
@@ -13,14 +12,13 @@ interface IProps {
 
 const DropDownInput = forwardRef(({ label, optionsArray, value, onChange, disabled = false, styleOverride = {} }: IProps, ref) => {
   const [error, setError] = useState<boolean>(false);
-  const isDisabled = useUserInputsContext().isDisabled;
 
   useImperativeHandle(
     ref,
     () => {
-      return { setError }; //Expose error state setter to parent for simultaneous form validation
+      return { setError, value }; //Expose error state setter and value reference to parent for simultaneous form validation
     },
-    []
+    [value]
   );
 
   const DEFAULT_COMPONENT_STYLE = { width: '9rem', marginLeft: '1rem' };
@@ -29,6 +27,12 @@ const DropDownInput = forwardRef(({ label, optionsArray, value, onChange, disabl
     setError(false);
     onChange(e);
   }
+
+  useEffect(() => {
+    if (value !== '') {
+      setError(false);
+    }
+  }, [value]);
 
   return (
     <FormControl sx={{ ...DEFAULT_COMPONENT_STYLE, ...styleOverride }} size="small">
