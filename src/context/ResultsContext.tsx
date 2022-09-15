@@ -1,21 +1,18 @@
 import { createContext, useState, useContext } from 'react';
 
-interface Results {
-  totalPayback: string;
-  monthlyPayment: string;
-  totalTax: string;
+export interface Installment {
+  payment: string;
+  principalPayment: string;
+  remainingPrincipal: string;
+  interestPayment: string;
+  kkdfPayment: string;
+  bsmvPayment: string;
 }
 
 export interface ResultsState {
-  results: Results;
-  setResults: React.Dispatch<React.SetStateAction<Results>>;
+  paymentTable: Installment[];
+  setPaymentTable: React.Dispatch<React.SetStateAction<Installment[]>>;
 }
-
-const INITIAL_STATE = {
-  totalPayback: '',
-  monthlyPayment: '',
-  totalTax: '',
-};
 
 interface IProps {
   children: JSX.Element;
@@ -32,8 +29,8 @@ function useResultsContext() {
 }
 
 const ResultsContextProvider = ({ children }: IProps) => {
-  const [results, setResults] = useState<Results>(INITIAL_STATE);
-  return <ResultsContext.Provider value={{ results: results, setResults: setResults }}>{children}</ResultsContext.Provider>;
+  const [paymentTable, setPaymentTable] = useState<Installment[]>([]);
+  return <ResultsContext.Provider value={{ paymentTable: paymentTable, setPaymentTable: setPaymentTable }}>{children}</ResultsContext.Provider>;
 };
 
 export { useResultsContext, ResultsContextProvider };

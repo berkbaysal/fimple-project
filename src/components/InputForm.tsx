@@ -6,6 +6,8 @@ import style from '../styles/InputForm.module.css';
 import { useUserInputsContext } from '../context/UserInputsContext';
 import AdvancedToggle from './AdvancedToggle';
 import { Button } from '@mui/material';
+import { constructPaymentTable } from '../static/util';
+import { useResultsContext } from '../context/ResultsContext';
 
 const PAYMENT_INTERVAL_ARRAY = [
   { displayText: 'Haftalık', value: 7 },
@@ -16,6 +18,7 @@ const COMPOUND_INTERVAL_ARRAY = [{ displayText: 'Günlük', value: 7 }, ...PAYME
 
 const InputForm = () => {
   const userInputs = useUserInputsContext();
+  const results = useResultsContext();
   return (
     <div className={style.inputFormContainer}>
       <div className={style.inputRow}>
@@ -64,7 +67,13 @@ const InputForm = () => {
         />
       </div>
       <div className={style.inputRow}>
-        <Button variant="contained" sx={{ width: '100%', marginTop: '2rem' }}>
+        <Button
+          variant="contained"
+          sx={{ width: '100%', marginTop: '2rem' }}
+          onClick={() => {
+            results.setPaymentTable(constructPaymentTable(userInputs));
+          }}
+        >
           Ödemeyi Hesapla
         </Button>
       </div>
