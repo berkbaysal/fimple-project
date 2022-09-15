@@ -11,3 +11,12 @@ body {
   justify-content: center;
   align-items: center;
 }
+
+.uiWrapper {
+  display: grid;
+  grid-template-columns: 2fr 2fr;
+}
+
+.resultDisplayWrapper {
+  background-color: red;
+}

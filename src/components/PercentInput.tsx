@@ -1,6 +1,6 @@
 import { TextField, InputAdornment } from '@mui/material';
 import { forwardRef, useState, useImperativeHandle } from 'react';
-import { useDisabledComponentsContext } from '../context/DisabledComponentsContext';
+import { useUserInputsContext } from '../context/UserInputsContext';
 
 interface IProps {
   label?: string; //optional label for input field
@@ -14,7 +14,7 @@ interface IProps {
 const InterestInput = forwardRef(({ label, value, onChange, controlled, helperText = ' ', styleOverride = {} }: IProps, ref) => {
   const [error, setError] = useState<boolean>(false); //internal error state to be controlled by the parent
   const [isFocused, setIsFocused] = useState(false);
-  const isDisabled = useDisabledComponentsContext().isDisabled;
+  const isDisabled = useUserInputsContext().isDisabled;
 
   useImperativeHandle(
     ref,

@@ -4,9 +4,8 @@ import DropDownInput from './DropDownInput';
 import MoneyInput from './MoneyInput';
 import style from '../styles/InputForm.module.css';
 import { useUserInputsContext } from '../context/UserInputsContext';
-import { Switch } from '@mui/material';
-import { useDisabledComponentsContext } from '../context/DisabledComponentsContext';
 import AdvancedToggle from './AdvancedToggle';
+import { Button } from '@mui/material';
 
 const PAYMENT_INTERVAL_ARRAY = [
   { displayText: 'Haftalık', value: 7 },
@@ -17,7 +16,6 @@ const COMPOUND_INTERVAL_ARRAY = [{ displayText: 'Günlük', value: 7 }, ...PAYME
 
 const InputForm = () => {
   const userInputs = useUserInputsContext();
-  const disabledContext = useDisabledComponentsContext();
   return (
     <div className={style.inputFormContainer}>
       <div className={style.inputRow}>
@@ -56,14 +54,24 @@ const InputForm = () => {
         <PercentInput value={userInputs.bsmvRate} onChange={(e) => userInputs.setBsmvRate(e.target.value)} label="BSMV Oranı" />
       </div>
       <div className={style.inputRow}>
-        <AdvancedToggle label="Bileşik Faiz" />
+        <AdvancedToggle label="Bileşik Faiz" value={userInputs.isDisabled} onChange={(e) => userInputs.setIsDisabled(e.target.checked)} />
         <DropDownInput
           value={userInputs.paymentInterval}
           optionsArray={PAYMENT_INTERVAL_ARRAY}
           label="Taksit Aralığı"
           onChange={(e) => userInputs.setPaymentInterval(e.target.value)}
-          controlled
+          disabled={!userInputs.isDisabled}
         />
+      </div>
+      <div className={style.inputRow}>
+        <Button variant="contained" sx={{ width: '100%', marginTop: '2rem' }}>
+          Ödemeyi Hesapla
+        </Button>
+      </div>
+      <div className={style.inputRow}>
+        <Button variant="contained" sx={{ width: '100%' }}>
+          Ödeme Planı Oluştur
+        </Button>
       </div>
     </div>
   );

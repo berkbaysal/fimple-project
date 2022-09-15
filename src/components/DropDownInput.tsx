@@ -1,19 +1,19 @@
 import { Select, MenuItem, SelectChangeEvent, OutlinedInput, InputLabel, FormControl } from '@mui/material';
 import { forwardRef, useImperativeHandle, useState } from 'react';
-import { useDisabledComponentsContext } from '../context/DisabledComponentsContext';
+import { useUserInputsContext } from '../context/UserInputsContext';
 
 interface IProps {
   label?: string; //optional label for initial display
-  controlled?: boolean; //allow control of disabled state of the instance from global context
+  disabled?: boolean; //allow control of disabled state of the instance
   styleOverride?: React.CSSProperties; //override MUI inline/default styling
   optionsArray: { displayText: string; value: number }[]; //array that holds select options display strings and internal values
   value: string; //controling react state
   onChange: (event: SelectChangeEvent) => void; //callback function to handle change
 }
 
-const DropDownInput = forwardRef(({ label, optionsArray, value, onChange, controlled, styleOverride = {} }: IProps, ref) => {
+const DropDownInput = forwardRef(({ label, optionsArray, value, onChange, disabled = false, styleOverride = {} }: IProps, ref) => {
   const [error, setError] = useState<boolean>(false);
-  const isDisabled = useDisabledComponentsContext().isDisabled;
+  const isDisabled = useUserInputsContext().isDisabled;
 
   useImperativeHandle(
     ref,
@@ -37,7 +37,7 @@ const DropDownInput = forwardRef(({ label, optionsArray, value, onChange, contro
         error={error}
         value={value}
         onChange={(e) => handleChange(e)}
-        disabled={controlled && !isDisabled}
+        disabled={disabled}
         input={<OutlinedInput label={label} />}
         size="small"
         labelId="select-label"

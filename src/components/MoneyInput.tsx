@@ -1,11 +1,10 @@
 import { TextField, InputAdornment } from '@mui/material';
 import { forwardRef, useState, useImperativeHandle } from 'react';
-import { useDisabledComponentsContext } from '../context/DisabledComponentsContext';
 
 interface IProps {
   label?: string; //optional label for input field
   helperText?: string; //sub text for input field
-  controlled?: boolean; //allow control of disabled state of the instance from global context
+  disabled?: boolean; //allow control of disabled state of the instance
   styleOverride?: React.CSSProperties; //override MUI inline/default styling
   currencyOverwrite?: string; //allow currency abbreviation or symbol to be overwritten, (DEFAULTS TO TURKISH LIRA (₺))
   value: string; //controling react state
@@ -13,10 +12,9 @@ interface IProps {
 }
 
 const InterestInput = forwardRef(
-  ({ label, value, onChange, controlled, helperText = ' ', currencyOverwrite = '₺', styleOverride = {} }: IProps, ref) => {
+  ({ label, value, onChange, disabled = false, helperText = ' ', currencyOverwrite = '₺', styleOverride = {} }: IProps, ref) => {
     const [error, setError] = useState<boolean>(false); //internal error state to be controlled by the parent
     const [isFocused, setIsFocused] = useState(false);
-    const isDisabled = useDisabledComponentsContext().isDisabled;
 
     useImperativeHandle(
       ref,
@@ -41,7 +39,7 @@ const InterestInput = forwardRef(
     return (
       <>
         <TextField
-          disabled={controlled && isDisabled}
+          disabled={disabled}
           error={error}
           value={value}
           size="small"

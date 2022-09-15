@@ -1,19 +1,17 @@
 import { TextField } from '@mui/material';
 import { forwardRef, useState, useImperativeHandle } from 'react';
-import { useDisabledComponentsContext } from '../context/DisabledComponentsContext';
 
 interface IProps {
   label?: string; //optional label for input field
   helperText?: string; //sub text for input field
-  controlled?: boolean; //allow control of disabled state of the instance from global context
+  disabled?: boolean; //allow control of disabled state of the instance
   styleOverride?: React.CSSProperties; //override MUI inline/default styling
   value: string; //controling react state
   onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void; //callback function to handle change
 }
 
-const InterestInput = forwardRef(({ label, value, onChange, controlled, helperText = ' ', styleOverride = {} }: IProps, ref) => {
+const InterestInput = forwardRef(({ label, value, onChange, disabled = false, helperText = ' ', styleOverride = {} }: IProps, ref) => {
   const [error, setError] = useState<boolean>(false); //internal error state to be controlled by the parent
-  const isDisabled = useDisabledComponentsContext().isDisabled;
 
   useImperativeHandle(
     ref,
@@ -38,7 +36,7 @@ const InterestInput = forwardRef(({ label, value, onChange, controlled, helperTe
   return (
     <>
       <TextField
-        disabled={controlled && isDisabled}
+        disabled={disabled}
         error={error}
         value={value}
         size="small"

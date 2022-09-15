@@ -1,6 +1,6 @@
 import { createContext, useState, useContext } from 'react';
 
-interface UserInputs {
+export interface UserInputs {
   principal: string;
   setPrincipal: React.Dispatch<React.SetStateAction<string>>;
   numberOfInstallments: string;
@@ -15,6 +15,8 @@ interface UserInputs {
   setKkdfRate: React.Dispatch<React.SetStateAction<string>>;
   bsmvRate: string;
   setBsmvRate: React.Dispatch<React.SetStateAction<string>>;
+  isDisabled: boolean;
+  setIsDisabled: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const UserInputsContext = createContext<UserInputs | undefined>(undefined);
@@ -39,6 +41,7 @@ const UserInputsContextProvider = ({ children }: IProps) => {
   const [compoundingPeriod, setCompoundingPeriod] = useState<string>('');
   const [kkdfRate, setKkdfRate] = useState<string>('');
   const [bsmvRate, setBsmvRate] = useState<string>('');
+  const [isDisabled, setIsDisabled] = useState<boolean>(false);
 
   return (
     <UserInputsContext.Provider
@@ -57,6 +60,8 @@ const UserInputsContextProvider = ({ children }: IProps) => {
         setBsmvRate: setBsmvRate,
         compoundingPeriod: compoundingPeriod,
         setCompoundingPeriod: setCompoundingPeriod,
+        isDisabled: isDisabled,
+        setIsDisabled: setIsDisabled,
       }}
     >
       {children}
