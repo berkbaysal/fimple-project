@@ -73,5 +73,18 @@ export const constructPaymentTable = (userInputs: UserInputs): Installment[] => 
 };
 
 export const getTotalPayment = (paymentTable: Installment[]) => {
-  return paymentTable.reduce((prevValue, currentValue) => prevValue + parseFloat(currentValue.payment), 0).toFixed(2);
+  return paymentTable.length > 0 ? paymentTable.reduce((prevValue, currentValue) => prevValue + parseFloat(currentValue.payment), 0).toFixed(2) : '';
+};
+export const getPaymentPerInstallment = (paymentTable: Installment[]) => {
+  return paymentTable[0] ? paymentTable[0].payment : '';
+};
+export const getTotalKkdf = (paymentTable: Installment[]) => {
+  return paymentTable.length > 0
+    ? paymentTable.reduce((prevValue, currentValue) => prevValue + parseFloat(currentValue.kkdfPayment), 0).toFixed(2)
+    : '';
+};
+export const getTotalBsmv = (paymentTable: Installment[]) => {
+  return paymentTable.length > 0
+    ? paymentTable.reduce((prevValue, currentValue) => prevValue + parseFloat(currentValue.bsmvPayment), 0).toFixed(2)
+    : '';
 };

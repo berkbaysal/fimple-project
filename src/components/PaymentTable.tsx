@@ -1,5 +1,5 @@
 import { TableContainer, Table, TableHead, TableCell, TableRow, TableBody } from '@mui/material';
-import { Installment, useResultsContext } from '../context/ResultsContext';
+import { useResultsContext } from '../context/ResultsContext';
 
 interface IProps {
   headers: string[];

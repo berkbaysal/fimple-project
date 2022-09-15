@@ -4,7 +4,7 @@ import DropDownInput from './DropDownInput';
 import MoneyInput from './MoneyInput';
 import style from '../styles/InputForm.module.css';
 import { useUserInputsContext } from '../context/UserInputsContext';
-import AdvancedToggle from './AdvancedToggle';
+import BooleanSwitch from './BooleanSwitch';
 import { Button } from '@mui/material';
 import { constructPaymentTable } from '../static/util';
 import { useResultsContext } from '../context/ResultsContext';
@@ -101,7 +101,7 @@ const InputForm = () => {
         <PercentInput value={userInputs.bsmvRate} onChange={(e) => userInputs.setBsmvRate(e.target.value)} label="BSMV Oranı" ref={bsmvRateRef} />
       </div>
       <div className={style.inputRow}>
-        <AdvancedToggle
+        <BooleanSwitch
           label="Bileşik Faiz"
           value={userInputs.complexCompoundingEnabled}
           onChange={(e) => userInputs.setComplexCompoundingEnabled(e.target.checked)}

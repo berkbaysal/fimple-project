@@ -1,0 +1,24 @@
+.title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #e30713;
+  border-bottom: 2px solid #e30713;
+}
+
+.title:not(:first-child) {
+  margin-top: 1.5rem;
+}
+
+.subtitle {
+  color: #145cc6;
+  font-size: 1.2rem;
+  margin-top: 1rem;
+  font-weight: 500;
+}
+
+.valueDisplay {
+  font-weight: 400;
+  font-size: 1.1rem;
+  margin-top: 0.75rem;
+  color: #333;
+}
