@@ -15,7 +15,7 @@ const PAYMENT_INTERVAL_ARRAY = [
   { displayText: 'Aylık', value: 30 },
   { displayText: 'Yıllık', value: 365 },
 ];
-const COMPOUND_INTERVAL_ARRAY = [{ displayText: 'Günlük', value: 7 }, ...PAYMENT_INTERVAL_ARRAY];
+const COMPOUND_INTERVAL_ARRAY = [{ displayText: 'Günlük', value: 1 }, ...PAYMENT_INTERVAL_ARRAY];
 
 interface CustomComponentRef {
   setError: React.Dispatch<React.SetStateAction<boolean>>;

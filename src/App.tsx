@@ -1,6 +1,7 @@
 import style from './styles/App.module.css';
 import InputForm from './components/InputForm';
 import ResultDisplay from './components/ResultDisplay';
+import PaymentTable from './components/PaymentTable';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
           <ResultDisplay />
         </div>
       </div>
+      <PaymentTable headers={['Taksit No', 'Taksit Tutarı', 'Ödenen Ana Para', 'Kalan Ana Para', 'Ödenen Faiz', 'KKDF', 'BSMV']} />
     </div>
   );
 }

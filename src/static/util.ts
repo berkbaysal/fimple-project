@@ -7,23 +7,23 @@ function calculateEffectiveInterestRate(userInputs: UserInputs): string {
   const effectiveInterestRate = (
     parseFloat(calculateInterestRatePerPeriod(userInputs)) *
     (1 + (parseFloat(userInputs.kkdfRate) / 100 + parseFloat(userInputs.bsmvRate) / 100))
-  ).toFixed(5);
-  console.log(effectiveInterestRate);
+  ).toFixed(10);
   return effectiveInterestRate;
 }
 
 function calculateInterestRatePerPeriod(userInputs: UserInputs): string {
-  const timeScale = parseFloat(userInputs.paymentInterval) / parseFloat(userInputs.interestRatePeriod);
+  const timeScale = parseInt(userInputs.paymentInterval) / parseInt(userInputs.interestRatePeriod);
   const interestRate = (parseFloat(userInputs.interestRate) / 100) * timeScale;
   const compoundsPerPayment = userInputs.complexCompoundingEnabled
     ? parseInt(userInputs.paymentInterval) / parseInt(userInputs.compoundingPeriod)
     : 1;
-  return (Math.pow(1 + interestRate / compoundsPerPayment, compoundsPerPayment) - 1).toFixed(5);
+  return (Math.pow(1 + interestRate / compoundsPerPayment, compoundsPerPayment) - 1).toFixed(10);
 }
 
-const calculateInterest = (remainingPrincipal: string, userInputs: UserInputs): string => {
+const calculateInterest = (remainingPrincipal: string, userInputs: UserInputs): number => {
+  //returned as number and converted to string afterwards to increase accuracy while preventing error carry-over.
   const interestRatePerPeriod = calculateInterestRatePerPeriod(userInputs);
-  return (parseFloat(remainingPrincipal) * (1 + parseFloat(interestRatePerPeriod)) - parseFloat(remainingPrincipal)).toFixed(2);
+  return parseFloat(remainingPrincipal) * (1 + parseFloat(interestRatePerPeriod)) - parseFloat(remainingPrincipal);
 };
 
 const calculatePaymentPerInterval = (userInputs: UserInputs): string => {
@@ -47,9 +47,9 @@ export const constructPaymentTable = (userInputs: UserInputs): Installment[] => 
 
   for (let i = 0; i < parseInt(userInputs.numberOfInstallments); i++) {
     const interestPayment = calculateInterest(currentDebt, userInputs);
-    const kkdfPayment = (parseFloat(interestPayment) * parseFloat(userInputs.kkdfRate)).toFixed(2);
-    const bsmvPayment = (parseFloat(interestPayment) * parseFloat(userInputs.bsmvRate)).toFixed(2);
-    let principalPayment = (parseFloat(payment) - (parseFloat(interestPayment) + parseFloat(kkdfPayment) + parseFloat(bsmvPayment))).toFixed(2);
+    const kkdfPayment = ((interestPayment * parseFloat(userInputs.kkdfRate)) / 100).toFixed(2);
+    const bsmvPayment = ((interestPayment * parseFloat(userInputs.bsmvRate)) / 100).toFixed(2);
+    let principalPayment = (parseFloat(payment) - (interestPayment + parseFloat(kkdfPayment) + parseFloat(bsmvPayment))).toFixed(2);
     let remainingPrincipal = (parseFloat(currentDebt) - parseFloat(principalPayment)).toFixed(2);
 
     if (i + 1 === parseInt(userInputs.numberOfInstallments)) {
@@ -62,7 +62,7 @@ export const constructPaymentTable = (userInputs: UserInputs): Installment[] => 
       payment: payment,
       principalPayment: principalPayment,
       remainingPrincipal: remainingPrincipal,
-      interestPayment: interestPayment,
+      interestPayment: interestPayment.toFixed(2),
       kkdfPayment: kkdfPayment,
       bsmvPayment: bsmvPayment,
     });
@@ -73,6 +73,5 @@ export const constructPaymentTable = (userInputs: UserInputs): Installment[] => 
 };
 
 export const getTotalPayment = (paymentTable: Installment[]) => {
-  return paymentTable[0]?.payment;
-  //return paymentTable.reduce((prevValue, currentValue) => prevValue + parseFloat(currentValue.payment), 0).toFixed(2);
+  return paymentTable.reduce((prevValue, currentValue) => prevValue + parseFloat(currentValue.payment), 0).toFixed(2);
 };
