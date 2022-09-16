@@ -22,7 +22,11 @@ interface CustomComponentRef {
   value: string;
 }
 
-const InputForm = () => {
+interface IProps {
+  setTableVisible: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const InputForm = ({ setTableVisible }: IProps) => {
   const userInputs = useUserInputsContext();
   const results = useResultsContext();
 
@@ -129,7 +133,16 @@ const InputForm = () => {
         </Button>
       </div>
       <div className={style.inputRow}>
-        <Button variant="contained" sx={{ width: '100%' }}>
+        <Button
+          variant="contained"
+          sx={{ width: '100%' }}
+          onClick={() => {
+            if (validateAll()) {
+              results.setPaymentTable(constructPaymentTable(userInputs));
+              setTableVisible(true);
+            }
+          }}
+        >
           Ödeme Planı Oluştur
         </Button>
       </div>

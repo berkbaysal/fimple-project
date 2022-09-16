@@ -18,7 +18,7 @@ const PaymentTable = ({ headers }: IProps) => {
             ))}
           </TableRow>
         </TableHead>
-        <TableBody>
+        <TableBody sx={{ maxHeight: 800 }}>
           {paymentTable.map((installment, index) => {
             return (
               <TableRow>
