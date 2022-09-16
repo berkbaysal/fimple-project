@@ -88,3 +88,7 @@ export const getTotalBsmv = (paymentTable: Installment[]) => {
     ? paymentTable.reduce((prevValue, currentValue) => prevValue + parseFloat(currentValue.bsmvPayment), 0).toFixed(2)
     : '';
 };
+export function formatCurrency(value: string) {
+  const formatter = new Intl.NumberFormat('de-DE');
+  return formatter.format(parseFloat(value));
+}

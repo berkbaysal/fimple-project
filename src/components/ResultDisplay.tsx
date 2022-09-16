@@ -1,7 +1,7 @@
 import style from '../styles/ResultDisplay.module.css';
 import { useEffect } from 'react';
 import { useResultsContext } from '../context/ResultsContext';
-import { getTotalPayment, getPaymentPerInstallment, getTotalKkdf, getTotalBsmv } from '../static/util';
+import { getTotalPayment, getPaymentPerInstallment, getTotalKkdf, getTotalBsmv, formatCurrency } from '../static/util';
 
 const ResultDisplay = () => {
   const results = useResultsContext();
@@ -19,18 +19,31 @@ const ResultDisplay = () => {
 
   return (
     <div className={style.resultsDisplay}>
-      <div className={style.title}>Ödeme Tutarları:</div>
-      <div className={style.subtitle}>Toplam geri ödeme:</div>
-      <div className={style.valueDisplay}>{(totalPayment ? totalPayment : 0) + ' ₺'}</div>
-      <div className={style.subtitle}>Aylık taksit tutarı:</div>
-      <div className={style.valueDisplay}>{(paymentPerInstallment ? paymentPerInstallment : 0) + ' ₺'}</div>
-      <div className={style.title}>Vergi tutarları:</div>
-      <div className={style.subtitle}>KKDF tutarı:</div>
-      <div className={style.valueDisplay}>{(totalKkdf ? totalKkdf : 0) + ' ₺'}</div>
-      <div className={style.subtitle}>BSMV tutarı:</div>
-      <div className={style.valueDisplay}>{(totalBsmv ? totalBsmv : 0) + ' ₺'}</div>
-      <div className={style.subtitle}>Toplam vergiler:</div>
-      <div className={style.valueDisplay}>{(totalKkdf && totalBsmv ? (parseFloat(totalKkdf) + parseFloat(totalBsmv)).toFixed(2) : 0) + ' ₺'}</div>
+      <div className={style.highlightSection}>
+        <div className={style.highlightTitle}>Aylık taksit tutarı:</div>
+        <div className={style.highlightValueDisplay}>{(paymentPerInstallment ? formatCurrency(paymentPerInstallment) : 0) + ' ₺'}</div>
+      </div>
+      <div className={style.detailSection}>
+        <div className={style.row}>
+          <div className={`${style.title} ${style.emphasize}`}>Toplam geri ödeme:</div>
+          <div className={`${style.valueDisplay} ${style.emphasize}`}>{(totalPayment ? formatCurrency(totalPayment) : 0) + ' ₺'}</div>
+        </div>
+        <hr />
+        <div className={style.row}>
+          <div className={style.title}>KKDF tutarı:</div>
+          <div className={style.valueDisplay}>{(totalKkdf ? formatCurrency(totalKkdf) : 0) + ' ₺'}</div>
+        </div>
+        <div className={style.row}>
+          <div className={style.title}>BSMV tutarı:</div>
+          <div className={style.valueDisplay}>{(totalBsmv ? formatCurrency(totalBsmv) : 0) + ' ₺'}</div>
+        </div>
+        <div className={style.row}>
+          <div className={`${style.title} ${style.emphasize}`}>Toplam vergiler:</div>
+          <div className={`${style.valueDisplay} ${style.emphasize}`}>
+            {(totalKkdf && totalBsmv ? formatCurrency((parseFloat(totalKkdf) + parseFloat(totalBsmv)).toFixed(2)) : 0) + ' ₺'}
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
