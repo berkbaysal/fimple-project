@@ -10,7 +10,7 @@ const PaymentTable = ({ headers }: IProps) => {
   const paymentTable = useResultsContext().paymentTable;
 
   return (
-    <TableContainer sx={{ height: 'min(800px,80vh)', scrollbarWidth: 'thin', m: 3, marginLeft: 4, width: 'auto', borderRadius: 'rem' }}>
+    <TableContainer sx={{ m: 3, marginLeft: 4, width: 'auto', height: '100%', scrollbarWidth: 'thin' }}>
       <Table stickyHeader>
         <TableHead>
           <TableRow>
@@ -21,7 +21,7 @@ const PaymentTable = ({ headers }: IProps) => {
             ))}
           </TableRow>
         </TableHead>
-        <TableBody sx={{ scrollbarWidth: 'thin' }}>
+        <TableBody sx={{ scrollbarWidth: 'thin', overflow: 'scroll' }}>
           {paymentTable.map((installment, index) => {
             return (
               <TableRow>

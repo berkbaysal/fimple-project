@@ -19,6 +19,8 @@ function App() {
     boxShadow: 24,
     overflow: 'hidden',
     minWidth: '50%',
+    height: 'min(800px,80vh)',
+    paddingBottom: '2rem',
     px: 1,
   };
 
