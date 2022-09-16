@@ -1,5 +1,6 @@
 import { TableContainer, Table, TableHead, TableCell, TableRow, TableBody } from '@mui/material';
 import { useResultsContext } from '../context/ResultsContext';
+import { formatCurrency } from '../static/util';
 
 interface IProps {
   headers: string[];
@@ -9,26 +10,28 @@ const PaymentTable = ({ headers }: IProps) => {
   const paymentTable = useResultsContext().paymentTable;
 
   return (
-    <TableContainer>
-      <Table>
+    <TableContainer sx={{ height: 'min(800px,80vh)', scrollbarWidth: 'thin', m: 3, marginLeft: 4, width: 'auto', borderRadius: 'rem' }}>
+      <Table stickyHeader>
         <TableHead>
           <TableRow>
             {headers.map((header) => (
-              <TableCell align="right">{header}</TableCell>
+              <TableCell align="right" sx={{ color: '#145cc6', fontWeight: '900' }}>
+                {header}
+              </TableCell>
             ))}
           </TableRow>
         </TableHead>
-        <TableBody sx={{ maxHeight: 800 }}>
+        <TableBody sx={{ scrollbarWidth: 'thin' }}>
           {paymentTable.map((installment, index) => {
             return (
               <TableRow>
                 <TableCell align="right">{index + 1}</TableCell>
-                <TableCell align="right">{installment.payment}</TableCell>
-                <TableCell align="right">{installment.principalPayment}</TableCell>
-                <TableCell align="right">{installment.remainingPrincipal}</TableCell>
-                <TableCell align="right">{installment.interestPayment}</TableCell>
-                <TableCell align="right">{installment.kkdfPayment}</TableCell>
-                <TableCell align="right">{installment.bsmvPayment}</TableCell>
+                <TableCell align="right">{formatCurrency(installment.payment)} ₺</TableCell>
+                <TableCell align="right">{formatCurrency(installment.principalPayment)} ₺</TableCell>
+                <TableCell align="right">{formatCurrency(installment.remainingPrincipal)} ₺</TableCell>
+                <TableCell align="right">{formatCurrency(installment.interestPayment)} ₺</TableCell>
+                <TableCell align="right">{formatCurrency(installment.kkdfPayment)} ₺</TableCell>
+                <TableCell align="right">{formatCurrency(installment.bsmvPayment)} ₺</TableCell>
               </TableRow>
             );
           })}

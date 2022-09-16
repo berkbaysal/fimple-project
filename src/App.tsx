@@ -8,21 +8,18 @@ import { Box, Modal } from '@mui/material';
 function App() {
   const [tableVisible, setTableVisible] = useState<boolean>(true);
 
-  const modalStyle = {
+  const boxStyle = {
     position: 'absolute' as 'absolute',
     top: '50%',
     left: '50%',
-    width: '50%',
-    minWidth: '500px',
-    maxHeight: '90%',
     transform: 'translate(-50%, -50%)',
     bgcolor: 'background.paper',
     border: '2px solid #000',
     borderRadius: '2rem',
     boxShadow: 24,
-    pt: 2,
-    px: 4,
-    pb: 3,
+    overflow: 'hidden',
+    minWidth: '50%',
+    px: 1,
   };
 
   return (
@@ -35,8 +32,8 @@ function App() {
           <ResultDisplay />
         </div>
       </div>
-      <Modal open={tableVisible} onClose={() => setTableVisible(false)}>
-        <Box sx={{ ...modalStyle }}>
+      <Modal open={tableVisible} onClose={() => setTableVisible(false)} sx={{ maxHeight: '100vh' }}>
+        <Box sx={{ ...boxStyle }}>
           <PaymentTable headers={['Taksit No', 'Taksit Tutarı', 'Ödenen Ana Para', 'Kalan Ana Para', 'Ödenen Faiz', 'KKDF', 'BSMV']} />
         </Box>
       </Modal>

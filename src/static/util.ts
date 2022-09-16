@@ -89,6 +89,6 @@ export const getTotalBsmv = (paymentTable: Installment[]) => {
     : '';
 };
 export function formatCurrency(value: string) {
-  const formatter = new Intl.NumberFormat('de-DE');
+  const formatter = new Intl.NumberFormat('de-DE', { minimumFractionDigits: 2 });
   return formatter.format(parseFloat(value));
 }

@@ -23,5 +23,17 @@ export const appTheme = createTheme({
         root: { fontFamily: 'inherit' },
       },
     },
+    MuiTable: {
+      styleOverrides: {
+        root: { fontFamily: 'inherit' },
+      },
+    },
+    MuiTableCell: {
+      styleOverrides: {
+        root: {
+          fontFamily: 'inherit',
+        },
+      },
+    },
   },
 });

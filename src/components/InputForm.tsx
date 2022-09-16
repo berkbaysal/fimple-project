@@ -52,6 +52,11 @@ const InputForm = ({ setTableVisible }: IProps) => {
       }
     });
 
+    if (interestRateRef.current?.value === '0') {
+      interestRateRef.current.setError(true);
+      allFieldsValid = false;
+    }
+
     if (userInputs.complexCompoundingEnabled && compoundingPeriodRef.current?.value === '') {
       compoundingPeriodRef.current.setError(true);
       allFieldsValid = false;
