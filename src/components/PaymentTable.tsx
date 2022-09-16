@@ -15,7 +15,7 @@ const PaymentTable = ({ headers }: IProps) => {
         <TableHead>
           <TableRow>
             {headers.map((header) => (
-              <TableCell align="right" sx={{ color: '#145cc6', fontWeight: '900' }}>
+              <TableCell align="right" sx={{ color: '#145cc6', fontWeight: '700', borderBottom: '2px solid #145cc6' }}>
                 {header}
               </TableCell>
             ))}
@@ -26,12 +26,12 @@ const PaymentTable = ({ headers }: IProps) => {
             return (
               <TableRow>
                 <TableCell align="right">{index + 1}</TableCell>
-                <TableCell align="right">{formatCurrency(installment.payment)} ₺</TableCell>
-                <TableCell align="right">{formatCurrency(installment.principalPayment)} ₺</TableCell>
-                <TableCell align="right">{formatCurrency(installment.remainingPrincipal)} ₺</TableCell>
-                <TableCell align="right">{formatCurrency(installment.interestPayment)} ₺</TableCell>
-                <TableCell align="right">{formatCurrency(installment.kkdfPayment)} ₺</TableCell>
-                <TableCell align="right">{formatCurrency(installment.bsmvPayment)} ₺</TableCell>
+                <TableCell align="right">{formatCurrency(installment.payment)}&nbsp;₺</TableCell>
+                <TableCell align="right">{formatCurrency(installment.principalPayment)}&nbsp;₺</TableCell>
+                <TableCell align="right">{formatCurrency(installment.remainingPrincipal)}&nbsp;₺</TableCell>
+                <TableCell align="right">{formatCurrency(installment.interestPayment)}&nbsp;₺</TableCell>
+                <TableCell align="right">{formatCurrency(installment.kkdfPayment)}&nbsp;₺</TableCell>
+                <TableCell align="right">{formatCurrency(installment.bsmvPayment)}&nbsp;₺</TableCell>
               </TableRow>
             );
           })}

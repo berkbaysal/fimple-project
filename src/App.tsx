@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { Box, Modal } from '@mui/material';
 
 function App() {
-  const [tableVisible, setTableVisible] = useState<boolean>(true);
+  const [tableVisible, setTableVisible] = useState<boolean>(false);
 
   const boxStyle = {
     position: 'absolute' as 'absolute',
@@ -27,6 +27,7 @@ function App() {
       <div className={style.uiWrapper}>
         <div className={style.inputFormWrapper}>
           <InputForm setTableVisible={setTableVisible} />
+          <p className={style.infoNote}>* Faiz uygulama aralığı ödeme aralığından farklı ise bu alanları kullanın.</p>
         </div>
         <div className={style.resultDisplayWrapper}>
           <ResultDisplay />

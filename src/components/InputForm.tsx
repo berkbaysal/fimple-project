@@ -100,7 +100,7 @@ const InputForm = ({ setTableVisible }: IProps) => {
         <DropDownInput
           value={userInputs.paymentInterval}
           optionsArray={PAYMENT_INTERVAL_ARRAY}
-          label="Ödeme Aralığı"
+          label="Taksit Aralığı"
           onChange={(e) => userInputs.setPaymentInterval(e.target.value)}
           ref={paymentIntervalRef}
         />
@@ -111,14 +111,14 @@ const InputForm = ({ setTableVisible }: IProps) => {
       </div>
       <div className={style.inputRow}>
         <BooleanSwitch
-          label="Bileşik Faiz"
+          label="Faiz Aralığı*"
           value={userInputs.complexCompoundingEnabled}
           onChange={(e) => userInputs.setComplexCompoundingEnabled(e.target.checked)}
         />
         <DropDownInput
           value={userInputs.compoundingPeriod}
           optionsArray={COMPOUND_INTERVAL_ARRAY.filter((item) => item.value <= parseInt(userInputs.paymentInterval))}
-          label="Taksit Aralığı"
+          label="Faiz Aralığı*"
           onChange={(e) => userInputs.setCompoundingPeriod(e.target.value)}
           disabled={!userInputs.complexCompoundingEnabled}
           ref={compoundingPeriodRef}
@@ -127,7 +127,7 @@ const InputForm = ({ setTableVisible }: IProps) => {
       <div className={style.inputRow}>
         <Button
           variant="contained"
-          sx={{ width: '100%', marginTop: '2rem' }}
+          sx={{ width: '80%', margin: 'auto', marginTop: '2rem' }}
           onClick={() => {
             if (validateAll()) {
               results.setPaymentTable(constructPaymentTable(userInputs));
@@ -140,7 +140,7 @@ const InputForm = ({ setTableVisible }: IProps) => {
       <div className={style.inputRow}>
         <Button
           variant="contained"
-          sx={{ width: '100%' }}
+          sx={{ width: '80%', margin: 'auto' }}
           onClick={() => {
             if (validateAll()) {
               results.setPaymentTable(constructPaymentTable(userInputs));

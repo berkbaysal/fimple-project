@@ -18,6 +18,11 @@ export const appTheme = createTheme({
         },
       },
     },
+    MuiButton: {
+      styleOverrides: {
+        root: { fontFamily: 'inherit' },
+      },
+    },
     MuiInputLabel: {
       styleOverrides: {
         root: { fontFamily: 'inherit' },
@@ -32,6 +37,14 @@ export const appTheme = createTheme({
       styleOverrides: {
         root: {
           fontFamily: 'inherit',
+        },
+      },
+    },
+    MuiTypography: {
+      styleOverrides: {
+        root: {
+          fontFamily: 'inherit',
+          fontSize: '0.9rem',
         },
       },
     },
