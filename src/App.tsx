@@ -2,7 +2,7 @@ import style from './styles/App.module.css';
 import InputForm from './components/InputForm';
 import ResultDisplay from './components/ResultDisplay';
 import PaymentTable from './components/PaymentTable';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { Box, Modal } from '@mui/material';
 
 function App() {
@@ -19,20 +19,23 @@ function App() {
     boxShadow: 24,
     overflow: 'hidden',
     minWidth: '50%',
+    maxWidth: '90%',
     height: 'min(800px,80vh)',
     paddingBottom: '2rem',
     px: 1,
   };
 
+  const resultDisplayRef = useRef(null);
+
   return (
     <div className={style.appContainer}>
       <div className={style.uiWrapper}>
         <div className={style.inputFormWrapper}>
-          <InputForm setTableVisible={setTableVisible} />
+          <InputForm setTableVisible={setTableVisible} ref={resultDisplayRef} />
           <p className={style.infoNote}>* Faiz uygulama aralığı ödeme aralığından farklı ise bu alanları kullanın.</p>
         </div>
         <div className={style.resultDisplayWrapper}>
-          <ResultDisplay />
+          <ResultDisplay ref={resultDisplayRef} />
         </div>
       </div>
       <Modal open={tableVisible} onClose={() => setTableVisible(false)} sx={{ maxHeight: '100vh' }}>

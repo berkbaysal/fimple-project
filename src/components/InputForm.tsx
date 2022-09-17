@@ -8,7 +8,7 @@ import BooleanSwitch from './BooleanSwitch';
 import { Button } from '@mui/material';
 import { constructPaymentTable } from '../static/util';
 import { useResultsContext } from '../context/ResultsContext';
-import { useRef } from 'react';
+import { forwardRef, useRef } from 'react';
 
 const PAYMENT_INTERVAL_ARRAY = [
   { displayText: 'Haftalık', value: 7 },
@@ -26,7 +26,7 @@ interface IProps {
   setTableVisible: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const InputForm = ({ setTableVisible }: IProps) => {
+const InputForm = forwardRef(({ setTableVisible }: IProps, resultDisplayRef: any) => {
   const userInputs = useUserInputsContext();
   const results = useResultsContext();
 
@@ -134,6 +134,8 @@ const InputForm = ({ setTableVisible }: IProps) => {
           onClick={() => {
             if (validateAll()) {
               results.setPaymentTable(constructPaymentTable(userInputs));
+              resultDisplayRef.current.scrollIntoView();
+              console.log(typeof resultDisplayRef);
             }
           }}
         >
@@ -156,6 +158,6 @@ const InputForm = ({ setTableVisible }: IProps) => {
       </div>
     </div>
   );
-};
+});
 
 export default InputForm;

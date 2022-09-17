@@ -1,9 +1,9 @@
 import style from '../styles/ResultDisplay.module.css';
-import { useEffect } from 'react';
+import { forwardRef, useEffect } from 'react';
 import { useResultsContext } from '../context/ResultsContext';
 import { getTotalPayment, getPaymentPerInstallment, getTotalKkdf, getTotalBsmv, formatCurrency } from '../static/util';
 
-const ResultDisplay = () => {
+const ResultDisplay = forwardRef(({}, ref: React.Ref<HTMLDivElement>) => {
   const results = useResultsContext();
   let totalPayment = getTotalPayment(results.paymentTable);
   let paymentPerInstallment = getPaymentPerInstallment(results.paymentTable);
@@ -18,7 +18,7 @@ const ResultDisplay = () => {
   }, [results.paymentTable]);
 
   return (
-    <div className={style.resultsDisplay}>
+    <div className={style.resultsDisplay} ref={ref}>
       <div className={style.highlightSection}>
         <div className={style.highlightTitle}>Aylık taksit tutarı:</div>
         <div className={style.highlightValueDisplay}>{(paymentPerInstallment ? formatCurrency(paymentPerInstallment) : 0) + ' ₺'}</div>
@@ -46,6 +46,6 @@ const ResultDisplay = () => {
       </div>
     </div>
   );
-};
+});
 
 export default ResultDisplay;
