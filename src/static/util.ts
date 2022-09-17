@@ -40,6 +40,11 @@ const calculatePaymentPerInterval = (userInputs: UserInputs): string => {
 
 //EXPORTED FUNCTIONS
 
+export function formatCurrency(value: string) {
+  const formatter = new Intl.NumberFormat('de-DE', { minimumFractionDigits: 2 });
+  return formatter.format(parseFloat(value));
+}
+
 export const constructPaymentTable = (userInputs: UserInputs): Installment[] => {
   let paymentTable: Installment[] = [];
   let currentDebt = userInputs.principal;
@@ -72,6 +77,9 @@ export const constructPaymentTable = (userInputs: UserInputs): Installment[] => 
   return paymentTable;
 };
 
+//functions below require a valid payment table constructed with constructPaymentTable(), they should only be called after a constructPaymentTable call.
+//If there is no valid payment table, they will return empty strings.
+
 export const getTotalPayment = (paymentTable: Installment[]) => {
   return paymentTable.length > 0 ? paymentTable.reduce((prevValue, currentValue) => prevValue + parseFloat(currentValue.payment), 0).toFixed(2) : '';
 };
@@ -88,7 +96,3 @@ export const getTotalBsmv = (paymentTable: Installment[]) => {
     ? paymentTable.reduce((prevValue, currentValue) => prevValue + parseFloat(currentValue.bsmvPayment), 0).toFixed(2)
     : '';
 };
-export function formatCurrency(value: string) {
-  const formatter = new Intl.NumberFormat('de-DE', { minimumFractionDigits: 2 });
-  return formatter.format(parseFloat(value));
-}

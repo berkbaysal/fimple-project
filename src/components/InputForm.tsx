@@ -10,6 +10,7 @@ import { constructPaymentTable } from '../static/util';
 import { useResultsContext } from '../context/ResultsContext';
 import { forwardRef, useRef } from 'react';
 
+//create arrays to define intervals for paying and compounding
 const PAYMENT_INTERVAL_ARRAY = [
   { displayText: 'Haftalık', value: 7 },
   { displayText: 'Aylık', value: 30 },
@@ -30,6 +31,8 @@ const InputForm = forwardRef(({ setTableVisible }: IProps, resultDisplayRef: any
   const userInputs = useUserInputsContext();
   const results = useResultsContext();
 
+  //Define refs for all required fields.
+
   const principalRef = useRef<CustomComponentRef>(null);
   const interestRateRef = useRef<CustomComponentRef>(null);
   const interestRatePeriodRef = useRef<CustomComponentRef>(null);
@@ -38,9 +41,15 @@ const InputForm = forwardRef(({ setTableVisible }: IProps, resultDisplayRef: any
   const kkdfRateRef = useRef<CustomComponentRef>(null);
   const bsmvRateRef = useRef<CustomComponentRef>(null);
 
+  //define refs for optional fields.
+
   const compoundingPeriodRef = useRef<CustomComponentRef>(null);
 
+  //put all required refs in an array for easier processing.
+
   const refArray = [principalRef, interestRateRef, interestRatePeriodRef, numberOfInstallmentsRef, paymentIntervalRef, kkdfRateRef, bsmvRateRef];
+
+  //validate all fields, set internal error states.
 
   function validateAll() {
     let allFieldsValid = true;
@@ -66,6 +75,7 @@ const InputForm = forwardRef(({ setTableVisible }: IProps, resultDisplayRef: any
   }
   return (
     <div className={style.inputFormContainer}>
+      {/* Input Field for Principal Loan */}
       <div className={style.inputRow}>
         <MoneyInput
           value={userInputs.principal}
@@ -75,6 +85,8 @@ const InputForm = forwardRef(({ setTableVisible }: IProps, resultDisplayRef: any
           ref={principalRef}
         />
       </div>
+
+      {/* Input Fields for Interest*/}
       <div className={style.inputRow}>
         <PercentInput
           value={userInputs.interestRate}
@@ -90,6 +102,8 @@ const InputForm = forwardRef(({ setTableVisible }: IProps, resultDisplayRef: any
           ref={interestRatePeriodRef}
         />
       </div>
+
+      {/* Input Fields for Installments*/}
       <div className={style.inputRow}>
         <IntegerInput
           value={userInputs.numberOfInstallments}
@@ -108,10 +122,14 @@ const InputForm = forwardRef(({ setTableVisible }: IProps, resultDisplayRef: any
           ref={paymentIntervalRef}
         />
       </div>
+
+      {/* Input Fields for Taxes*/}
       <div className={style.inputRow}>
         <PercentInput value={userInputs.kkdfRate} onChange={(e) => userInputs.setKkdfRate(e.target.value)} label="KKDF Oranı" ref={kkdfRateRef} />
         <PercentInput value={userInputs.bsmvRate} onChange={(e) => userInputs.setBsmvRate(e.target.value)} label="BSMV Oranı" ref={bsmvRateRef} />
       </div>
+
+      {/* Input Fields for Complex Compounding*/}
       <div className={style.inputRow}>
         <BooleanSwitch
           label="Faiz Aralığı*"
@@ -127,6 +145,8 @@ const InputForm = forwardRef(({ setTableVisible }: IProps, resultDisplayRef: any
           ref={compoundingPeriodRef}
         />
       </div>
+
+      {/* Submit Buttons*/}
       <div className={style.inputRow}>
         <Button
           variant="contained"

@@ -9,6 +9,8 @@ interface IProps {
 const PaymentTable = ({ headers }: IProps) => {
   const paymentTable = useResultsContext().paymentTable;
 
+  const currency = '₺'; //Currency localization can be added as a future improvement by attaching a state to this variable
+
   return (
     <TableContainer sx={{ m: 3, marginLeft: 4, width: 'auto', height: '100%', scrollbarWidth: 'thin' }}>
       <Table stickyHeader>
@@ -26,12 +28,24 @@ const PaymentTable = ({ headers }: IProps) => {
             return (
               <TableRow>
                 <TableCell align="right">{index + 1}</TableCell>
-                <TableCell align="right">{formatCurrency(installment.payment)}&nbsp;₺</TableCell>
-                <TableCell align="right">{formatCurrency(installment.principalPayment)}&nbsp;₺</TableCell>
-                <TableCell align="right">{formatCurrency(installment.remainingPrincipal)}&nbsp;₺</TableCell>
-                <TableCell align="right">{formatCurrency(installment.interestPayment)}&nbsp;₺</TableCell>
-                <TableCell align="right">{formatCurrency(installment.kkdfPayment)}&nbsp;₺</TableCell>
-                <TableCell align="right">{formatCurrency(installment.bsmvPayment)}&nbsp;₺</TableCell>
+                <TableCell align="right">
+                  {formatCurrency(installment.payment)}&nbsp;{currency}
+                </TableCell>
+                <TableCell align="right">
+                  {formatCurrency(installment.principalPayment)}&nbsp;{currency}
+                </TableCell>
+                <TableCell align="right">
+                  {formatCurrency(installment.remainingPrincipal)}&nbsp;{currency}
+                </TableCell>
+                <TableCell align="right">
+                  {formatCurrency(installment.interestPayment)}&nbsp;{currency}
+                </TableCell>
+                <TableCell align="right">
+                  {formatCurrency(installment.kkdfPayment)}&nbsp;{currency}
+                </TableCell>
+                <TableCell align="right">
+                  {formatCurrency(installment.bsmvPayment)}&nbsp;{currency}
+                </TableCell>
               </TableRow>
             );
           })}

@@ -3,26 +3,23 @@ import { forwardRef, useEffect } from 'react';
 import { useResultsContext } from '../context/ResultsContext';
 import { getTotalPayment, getPaymentPerInstallment, getTotalKkdf, getTotalBsmv, formatCurrency } from '../static/util';
 
-const ResultDisplay = forwardRef(({}, ref: React.Ref<HTMLDivElement>) => {
+const ResultDisplay = forwardRef((props, ref: React.Ref<HTMLDivElement>) => {
   const results = useResultsContext();
   let totalPayment = getTotalPayment(results.paymentTable);
   let paymentPerInstallment = getPaymentPerInstallment(results.paymentTable);
   let totalBsmv = getTotalBsmv(results.paymentTable);
   let totalKkdf = getTotalKkdf(results.paymentTable);
 
-  useEffect(() => {
-    totalPayment = getTotalPayment(results.paymentTable);
-    paymentPerInstallment = getPaymentPerInstallment(results.paymentTable);
-    totalBsmv = getTotalBsmv(results.paymentTable);
-    totalKkdf = getTotalKkdf(results.paymentTable);
-  }, [results.paymentTable]);
+  useEffect(() => {}, [results.paymentTable]); //re-render results when payment table is updated.
 
   return (
     <div className={style.resultsDisplay} ref={ref}>
+      {/* Top Highlight Section */}
       <div className={style.highlightSection}>
         <div className={style.highlightTitle}>Aylık taksit tutarı:</div>
         <div className={style.highlightValueDisplay}>{(paymentPerInstallment ? formatCurrency(paymentPerInstallment) : 0) + ' ₺'}</div>
       </div>
+      {/* Bottom Section */}
       <div className={style.detailSection}>
         <div className={style.row}>
           <div className={`${style.title} ${style.emphasize}`}>Toplam geri ödeme:</div>
