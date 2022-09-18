@@ -155,7 +155,6 @@ const InputForm = forwardRef(({ setTableVisible }: IProps, resultDisplayRef: any
             if (validateAll()) {
               results.setPaymentTable(constructPaymentTable(userInputs));
               resultDisplayRef.current.scrollIntoView();
-              console.log(typeof resultDisplayRef);
             }
           }}
         >

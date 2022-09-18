@@ -17,7 +17,7 @@ const PaymentTable = ({ headers }: IProps) => {
         <TableHead>
           <TableRow>
             {headers.map((header) => (
-              <TableCell align="right" sx={{ color: '#145cc6', fontWeight: '700', borderBottom: '2px solid #145cc6' }}>
+              <TableCell align="right" sx={{ color: '#145cc6', fontWeight: '700', borderBottom: '2px solid #145cc6' }} key={header}>
                 {header}
               </TableCell>
             ))}
@@ -26,7 +26,7 @@ const PaymentTable = ({ headers }: IProps) => {
         <TableBody sx={{ scrollbarWidth: 'thin', overflow: 'scroll' }}>
           {paymentTable.map((installment, index) => {
             return (
-              <TableRow>
+              <TableRow key={index}>
                 <TableCell align="right">{index + 1}</TableCell>
                 <TableCell align="right">
                   {formatCurrency(installment.payment)}&nbsp;{currency}

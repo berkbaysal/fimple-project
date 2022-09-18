@@ -7,7 +7,7 @@ import { Box, Modal } from '@mui/material';
 
 function App() {
   const [tableVisible, setTableVisible] = useState<boolean>(false);
-  const resultDisplayRef = useRef(null);
+  const resultDisplayRef = useRef<HTMLDivElement>(null);
 
   return (
     <div className={style.appContainer}>
