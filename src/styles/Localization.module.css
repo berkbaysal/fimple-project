@@ -1,0 +1,25 @@
+.localizationContainer {
+  padding: 2rem 0 1rem 0;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.localizationOption {
+  cursor: pointer;
+}
+
+.localizationOption:not(:first-child) {
+  margin-left: 1rem;
+}
+
+.localizationOption:not(:last-child)::after {
+  margin-left: 1rem;
+  content: '|';
+}
+
+.selected {
+  font-weight: bold;
+  cursor: unset;
+}
