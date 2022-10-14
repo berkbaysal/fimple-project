@@ -9,14 +9,8 @@ import { Button } from '@mui/material';
 import { constructPaymentTable } from '../static/util';
 import { useResultsContext } from '../context/ResultsContext';
 import { forwardRef, useRef } from 'react';
-
-//create arrays to define intervals for paying and compounding
-const PAYMENT_INTERVAL_ARRAY = [
-  { displayText: 'Haftalık', value: 7 },
-  { displayText: 'Aylık', value: 30 },
-  { displayText: 'Yıllık', value: 365 },
-];
-const COMPOUND_INTERVAL_ARRAY = [{ displayText: 'Günlük', value: 1 }, ...PAYMENT_INTERVAL_ARRAY];
+import content from '../static/localization';
+import { useLocalizationContext } from '../context/LocalizationContext';
 
 interface CustomComponentRef {
   setError: React.Dispatch<React.SetStateAction<boolean>>;
@@ -30,6 +24,15 @@ interface IProps {
 const InputForm = forwardRef(({ setTableVisible }: IProps, resultDisplayRef: any) => {
   const userInputs = useUserInputsContext();
   const results = useResultsContext();
+  const lang = useLocalizationContext().localization;
+
+  //create arrays to define intervals for paying and compounding
+  const PAYMENT_INTERVAL_ARRAY = [
+    { displayText: content[lang].timeIntervals.weekly, value: 7 },
+    { displayText: content[lang].timeIntervals.monthly, value: 30 },
+    { displayText: content[lang].timeIntervals.yearly, value: 365 },
+  ];
+  const COMPOUND_INTERVAL_ARRAY = [{ displayText: content[lang].timeIntervals.daily, value: 1 }, ...PAYMENT_INTERVAL_ARRAY];
 
   //Define refs for all required fields.
 
@@ -47,7 +50,15 @@ const InputForm = forwardRef(({ setTableVisible }: IProps, resultDisplayRef: any
 
   //put all required refs in an array for easier processing.
 
-  const refArray = [principalRef, interestRateRef, interestRatePeriodRef, numberOfInstallmentsRef, paymentIntervalRef, kkdfRateRef, bsmvRateRef];
+  const refArray = [
+    principalRef,
+    interestRateRef,
+    interestRatePeriodRef,
+    numberOfInstallmentsRef,
+    paymentIntervalRef,
+    kkdfRateRef,
+    bsmvRateRef,
+  ];
 
   //validate all fields, set internal error states.
 
@@ -80,7 +91,7 @@ const InputForm = forwardRef(({ setTableVisible }: IProps, resultDisplayRef: any
         <MoneyInput
           value={userInputs.principal}
           onChange={(e) => userInputs.setPrincipal(e.target.value)}
-          label="Ana Para"
+          label={content[lang].principal}
           styleOverride={{ width: '100%' }}
           ref={principalRef}
         />
@@ -91,13 +102,13 @@ const InputForm = forwardRef(({ setTableVisible }: IProps, resultDisplayRef: any
         <PercentInput
           value={userInputs.interestRate}
           onChange={(e) => userInputs.setInterestRate(e.target.value)}
-          label="Kar oranı"
+          label={content[lang].interestRate}
           ref={interestRateRef}
         />
         <DropDownInput
           value={userInputs.interestRatePeriod}
           optionsArray={PAYMENT_INTERVAL_ARRAY}
-          label="Oran Cinsi"
+          label={content[lang].ratePeriod}
           onChange={(e) => userInputs.setInterestRatePeriod(e.target.value)}
           ref={interestRatePeriodRef}
         />
@@ -108,13 +119,13 @@ const InputForm = forwardRef(({ setTableVisible }: IProps, resultDisplayRef: any
         <IntegerInput
           value={userInputs.numberOfInstallments}
           onChange={(e) => userInputs.setNumberOfInstallments(e.target.value)}
-          label="Taksit Sayısı"
+          label={content[lang].installmentCount}
           ref={numberOfInstallmentsRef}
         />
         <DropDownInput
           value={userInputs.paymentInterval}
           optionsArray={PAYMENT_INTERVAL_ARRAY}
-          label="Taksit Aralığı"
+          label={content[lang].installmentPeriod}
           onChange={(e) => {
             userInputs.setPaymentInterval(e.target.value);
             userInputs.setCompoundingPeriod('');
@@ -125,21 +136,31 @@ const InputForm = forwardRef(({ setTableVisible }: IProps, resultDisplayRef: any
 
       {/* Input Fields for Taxes*/}
       <div className={style.inputRow}>
-        <PercentInput value={userInputs.kkdfRate} onChange={(e) => userInputs.setKkdfRate(e.target.value)} label="KKDF Oranı" ref={kkdfRateRef} />
-        <PercentInput value={userInputs.bsmvRate} onChange={(e) => userInputs.setBsmvRate(e.target.value)} label="BSMV Oranı" ref={bsmvRateRef} />
+        <PercentInput
+          value={userInputs.kkdfRate}
+          onChange={(e) => userInputs.setKkdfRate(e.target.value)}
+          label={content[lang].kkdfRate}
+          ref={kkdfRateRef}
+        />
+        <PercentInput
+          value={userInputs.bsmvRate}
+          onChange={(e) => userInputs.setBsmvRate(e.target.value)}
+          label={content[lang].bsmvRate}
+          ref={bsmvRateRef}
+        />
       </div>
 
       {/* Input Fields for Complex Compounding*/}
       <div className={style.inputRow}>
         <BooleanSwitch
-          label="Faiz Aralığı*"
+          label={content[lang].compoundingPeriod + '*'}
           value={userInputs.complexCompoundingEnabled}
           onChange={(e) => userInputs.setComplexCompoundingEnabled(e.target.checked)}
         />
         <DropDownInput
           value={userInputs.compoundingPeriod}
           optionsArray={COMPOUND_INTERVAL_ARRAY.filter((item) => item.value <= parseInt(userInputs.paymentInterval))}
-          label="Faiz Aralığı*"
+          label={content[lang].compoundingPeriod}
           onChange={(e) => userInputs.setCompoundingPeriod(e.target.value)}
           disabled={!userInputs.complexCompoundingEnabled}
           ref={compoundingPeriodRef}
@@ -158,7 +179,7 @@ const InputForm = forwardRef(({ setTableVisible }: IProps, resultDisplayRef: any
             }
           }}
         >
-          Ödemeyi Hesapla
+          {content[lang].calculatePayment}
         </Button>
       </div>
       <div className={style.inputRow}>
@@ -172,7 +193,7 @@ const InputForm = forwardRef(({ setTableVisible }: IProps, resultDisplayRef: any
             }
           }}
         >
-          Ödeme Planı Oluştur
+          {content[lang].createPaymentPlan}
         </Button>
       </div>
     </div>

@@ -1,6 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-
-type Localization = 'en' | 'tr';
+import { Localization, isValidLocalization } from '../index';
 
 interface LocalizationContext {
   localization: Localization;
@@ -19,15 +18,11 @@ function useLocalizationContext() {
 
 interface IProps {
   children: JSX.Element;
+  init: Localization;
 }
 
-const LocalizationContextProvider = ({ children }: IProps) => {
-  const [localization, setLocalization] = useState<Localization>('en');
-
-  function checkLocalization() {
-    const storedSetting = localStorage.getItem('lang');
-    if (storedSetting && isValidLocalization(storedSetting)) setLocalization(storedSetting);
-  }
+const LocalizationContextProvider = ({ children, init }: IProps) => {
+  const [localization, setLocalization] = useState<Localization>(init);
 
   function updateLocalization(userChoice: string) {
     if (isValidLocalization(userChoice)) {
@@ -36,14 +31,6 @@ const LocalizationContextProvider = ({ children }: IProps) => {
     }
   }
 
-  function isValidLocalization(value: string): value is Localization {
-    return value === 'en' || value == 'tr';
-  }
-
-  useEffect(() => {
-    checkLocalization();
-  }, []);
-
   return (
     <LocalizationContext.Provider value={{ localization: localization, updateLocalization: updateLocalization }}>
       {children}
@@ -51,4 +38,4 @@ const LocalizationContextProvider = ({ children }: IProps) => {
   );
 };
 
-export { useLocalizationContext, LocalizationContextProvider };
+export { useLocalizationContext, LocalizationContextProvider, isValidLocalization };
