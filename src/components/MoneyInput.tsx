@@ -12,7 +12,7 @@ interface IProps {
 }
 
 const InterestInput = forwardRef(
-  ({ label, value, onChange, disabled = false, helperText = ' ', currencyOverwrite = '₺', styleOverride = {} }: IProps, ref) => {
+  ({ label, value, onChange, disabled = false, helperText = '', currencyOverwrite = '₺', styleOverride = {} }: IProps, ref) => {
     const [error, setError] = useState<boolean>(false); //internal error state to be controlled by the parent
     const [isFocused, setIsFocused] = useState(false);
 
@@ -54,7 +54,9 @@ const InterestInput = forwardRef(
           sx={{ ...DEFAULT_COMPONENT_STYLE, ...styleOverride }}
           label={label ? label : ''}
           helperText={helperText ? helperText : ''}
-          InputProps={{ endAdornment: value !== '' || isFocused ? <InputAdornment position="end">{currencyOverwrite}</InputAdornment> : <></> }}
+          InputProps={{
+            endAdornment: value !== '' || isFocused ? <InputAdornment position="end">{currencyOverwrite}</InputAdornment> : <></>,
+          }}
           onBlur={(e) => setIsFocused(false)}
           onFocus={(e) => setIsFocused(true)}
         ></TextField>

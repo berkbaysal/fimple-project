@@ -4,9 +4,14 @@
   padding: 3rem;
   border-radius: 2rem;
   box-shadow: 0.3rem 0.3rem 1rem rgba(0, 0, 0, 0.4);
+  width: 325px;
 }
 .inputRow {
   display: flex;
   justify-content: space-between;
   margin-bottom: 0.5rem;
+}
+.headingRow {
+  font-weight: 500;
+  margin: 0.75rem 1rem;
 }

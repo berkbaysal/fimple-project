@@ -10,55 +10,57 @@ interface IProps {
   onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void; //callback function to handle change
 }
 
-const InterestInput = forwardRef(({ label, value, onChange, disabled = false, helperText = ' ', styleOverride = {} }: IProps, ref) => {
-  const [error, setError] = useState<boolean>(false); //internal error state to be controlled by the parent
-  const [isFocused, setIsFocused] = useState(false);
+const InterestInput = forwardRef(
+  ({ label, value, onChange, disabled = false, helperText = '', styleOverride = {} }: IProps, ref) => {
+    const [error, setError] = useState<boolean>(false); //internal error state to be controlled by the parent
+    const [isFocused, setIsFocused] = useState(false);
 
-  useImperativeHandle(
-    ref,
-    () => {
-      return { setError, value }; //Expose error state setter and value reference to parent for simultaneous form validation
-    },
-    [value]
-  );
+    useImperativeHandle(
+      ref,
+      () => {
+        return { setError, value }; //Expose error state setter and value reference to parent for simultaneous form validation
+      },
+      [value]
+    );
 
-  const DEFAULT_COMPONENT_STYLE = { width: '9rem', marginLeft: '1rem' };
+    const DEFAULT_COMPONENT_STYLE = { width: '9rem', marginLeft: '1rem' };
 
-  function handleInput(e: React.ChangeEvent<HTMLInputElement>) {
-    const validInput: RegExp = /^\d+\.?\d*$|^\d*$/; //regex validation for a decimal number
+    function handleInput(e: React.ChangeEvent<HTMLInputElement>) {
+      const validInput: RegExp = /^\d+\.?\d*$|^\d*$/; //regex validation for a decimal number
 
-    if (e.target.value.match(validInput)) {
-      onChange(e);
-      return;
-    } else {
-      return;
+      if (e.target.value.match(validInput)) {
+        onChange(e);
+        return;
+      } else {
+        return;
+      }
     }
+
+    useEffect(() => {
+      if (value !== '') {
+        setError(false);
+      }
+    }, [value]);
+
+    return (
+      <>
+        <TextField
+          disabled={disabled}
+          error={error}
+          value={value}
+          size="small"
+          onChange={handleInput}
+          variant="outlined"
+          sx={{ ...DEFAULT_COMPONENT_STYLE, ...styleOverride }}
+          label={label ? label : ''}
+          helperText={helperText}
+          InputProps={{ endAdornment: value !== '' || isFocused ? <InputAdornment position="end">%</InputAdornment> : <></> }}
+          onFocus={(e) => setIsFocused(true)}
+          onBlur={(e) => setIsFocused(false)}
+        ></TextField>
+      </>
+    );
   }
-
-  useEffect(() => {
-    if (value !== '') {
-      setError(false);
-    }
-  }, [value]);
-
-  return (
-    <>
-      <TextField
-        disabled={disabled}
-        error={error}
-        value={value}
-        size="small"
-        onChange={handleInput}
-        variant="outlined"
-        sx={{ ...DEFAULT_COMPONENT_STYLE, ...styleOverride }}
-        label={label ? label : ''}
-        helperText={helperText}
-        InputProps={{ endAdornment: value !== '' || isFocused ? <InputAdornment position="end">%</InputAdornment> : <></> }}
-        onFocus={(e) => setIsFocused(true)}
-        onBlur={(e) => setIsFocused(false)}
-      ></TextField>
-    </>
-  );
-});
+);
 
 export default InterestInput;

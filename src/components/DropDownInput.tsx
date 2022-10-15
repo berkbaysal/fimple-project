@@ -10,52 +10,54 @@ interface IProps {
   onChange: (event: SelectChangeEvent) => void; //callback function to handle change
 }
 
-const DropDownInput = forwardRef(({ label, optionsArray, value, onChange, disabled = false, styleOverride = {} }: IProps, ref) => {
-  const [error, setError] = useState<boolean>(false);
+const DropDownInput = forwardRef(
+  ({ label, optionsArray, value, onChange, disabled = false, styleOverride = {} }: IProps, ref) => {
+    const [error, setError] = useState<boolean>(false);
 
-  useImperativeHandle(
-    ref,
-    () => {
-      return { setError, value }; //Expose error state setter and value reference to parent for simultaneous form validation
-    },
-    [value]
-  );
+    useImperativeHandle(
+      ref,
+      () => {
+        return { setError, value }; //Expose error state setter and value reference to parent for simultaneous form validation
+      },
+      [value]
+    );
 
-  const DEFAULT_COMPONENT_STYLE = { width: '9rem', marginLeft: '1rem' };
+    const DEFAULT_COMPONENT_STYLE = { width: '9rem', marginLeft: '1rem' };
 
-  function handleChange(e: SelectChangeEvent<string>) {
-    setError(false);
-    onChange(e);
-  }
-
-  useEffect(() => {
-    if (value !== '') {
+    function handleChange(e: SelectChangeEvent<string>) {
       setError(false);
+      onChange(e);
     }
-  }, [value]);
 
-  return (
-    <FormControl sx={{ ...DEFAULT_COMPONENT_STYLE, ...styleOverride }} size="small">
-      <InputLabel id="select-label">{label}</InputLabel>
-      <Select
-        error={error}
-        value={value}
-        onChange={(e) => handleChange(e)}
-        disabled={disabled}
-        input={<OutlinedInput label={label} />}
-        size="small"
-        labelId="select-label"
-      >
-        {optionsArray.map((item) => {
-          return (
-            <MenuItem value={item.value} key={item.value}>
-              {item.displayText}
-            </MenuItem>
-          );
-        })}
-      </Select>
-    </FormControl>
-  );
-});
+    useEffect(() => {
+      if (value !== '') {
+        setError(false);
+      }
+    }, [value]);
+
+    return (
+      <FormControl sx={{ ...DEFAULT_COMPONENT_STYLE, ...styleOverride }} size="small">
+        <InputLabel id="select-label">{label}</InputLabel>
+        <Select
+          error={error}
+          value={value}
+          onChange={(e) => handleChange(e)}
+          disabled={disabled}
+          input={<OutlinedInput label={label} />}
+          size="small"
+          labelId="select-label"
+        >
+          {optionsArray.map((item) => {
+            return (
+              <MenuItem value={item.value} key={item.value}>
+                {item.displayText}
+              </MenuItem>
+            );
+          })}
+        </Select>
+      </FormControl>
+    );
+  }
+);
 
 export default DropDownInput;

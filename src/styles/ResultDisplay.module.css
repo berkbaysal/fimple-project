@@ -1,6 +1,8 @@
 .resultsDisplay {
   border-radius: 2rem;
   box-shadow: 0.3rem 0.3rem 1rem rgba(0, 0, 0, 0.4);
+  width: calc(325px + 6rem);
+  overflow: hidden;
 }
 .title {
   color: #145cc6;

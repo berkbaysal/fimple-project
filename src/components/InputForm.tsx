@@ -98,34 +98,36 @@ const InputForm = forwardRef(({ setTableVisible }: IProps, resultDisplayRef: any
       </div>
 
       {/* Input Fields for Interest*/}
+      <div className={`${style.inputRow} ${style.headingRow}`}>{content[lang].interest}:</div>
       <div className={style.inputRow}>
         <PercentInput
           value={userInputs.interestRate}
           onChange={(e) => userInputs.setInterestRate(e.target.value)}
-          label={content[lang].interestRate}
+          label={content[lang].rate}
           ref={interestRateRef}
         />
         <DropDownInput
           value={userInputs.interestRatePeriod}
           optionsArray={PAYMENT_INTERVAL_ARRAY}
-          label={content[lang].ratePeriod}
+          label={content[lang].period}
           onChange={(e) => userInputs.setInterestRatePeriod(e.target.value)}
           ref={interestRatePeriodRef}
         />
       </div>
 
       {/* Input Fields for Installments*/}
+      <div className={`${style.inputRow} ${style.headingRow}`}>{content[lang].installments}:</div>
       <div className={style.inputRow}>
         <IntegerInput
           value={userInputs.numberOfInstallments}
           onChange={(e) => userInputs.setNumberOfInstallments(e.target.value)}
-          label={content[lang].installmentCount}
+          label={content[lang].count}
           ref={numberOfInstallmentsRef}
         />
         <DropDownInput
           value={userInputs.paymentInterval}
           optionsArray={PAYMENT_INTERVAL_ARRAY}
-          label={content[lang].installmentPeriod}
+          label={content[lang].period}
           onChange={(e) => {
             userInputs.setPaymentInterval(e.target.value);
             userInputs.setCompoundingPeriod('');
@@ -135,6 +137,7 @@ const InputForm = forwardRef(({ setTableVisible }: IProps, resultDisplayRef: any
       </div>
 
       {/* Input Fields for Taxes*/}
+      <div className={`${style.inputRow} ${style.headingRow}`}>{content[lang].taxes}:</div>
       <div className={style.inputRow}>
         <PercentInput
           value={userInputs.kkdfRate}
@@ -151,16 +154,17 @@ const InputForm = forwardRef(({ setTableVisible }: IProps, resultDisplayRef: any
       </div>
 
       {/* Input Fields for Complex Compounding*/}
+      <div className={`${style.inputRow} ${style.headingRow}`}>{content[lang].complexCompounding}:</div>
       <div className={style.inputRow}>
         <BooleanSwitch
-          label={content[lang].compoundingPeriod + '*'}
+          label={content[lang].enable}
           value={userInputs.complexCompoundingEnabled}
           onChange={(e) => userInputs.setComplexCompoundingEnabled(e.target.checked)}
         />
         <DropDownInput
           value={userInputs.compoundingPeriod}
           optionsArray={COMPOUND_INTERVAL_ARRAY.filter((item) => item.value <= parseInt(userInputs.paymentInterval))}
-          label={content[lang].compoundingPeriod}
+          label={content[lang].period}
           onChange={(e) => userInputs.setCompoundingPeriod(e.target.value)}
           disabled={!userInputs.complexCompoundingEnabled}
           ref={compoundingPeriodRef}
