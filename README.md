@@ -18,10 +18,9 @@
 - Modular CSS and build to be implemented in bigger projects with ease and no conflicts.
 - Fully responsive.
 - Ability to calculate complex compounding (when compounding period and payment period differ).
+- Localization for Turkish and English languages, infrastructure to expand with more languages.
 
 ### Features planned for future versions:
 
-- Code base ready to implement language and currency localization.
+- Code base ready to implement currency localization.
 - Ability to simplify the app by disabling certain features based on customer demand using a config file.
-- Implementing unit testing.
-- Implementing end-to-end testing.
